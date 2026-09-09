@@ -2,6 +2,7 @@ package com.tvmaze.middleware.dto.tvmaze;
 
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.tvmaze.middleware.dto.CommentResponse;
 
 public record TvMazeShowDetail(
         Long id,
@@ -27,6 +28,7 @@ public record TvMazeShowDetail(
         String summary,
         Long updated,
         @JsonProperty("_links")
-        TvMazeLinks links
+        TvMazeLinks links,
+        List<CommentResponse> comments
 ) {
 }

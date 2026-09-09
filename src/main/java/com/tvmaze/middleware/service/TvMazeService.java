@@ -1,11 +1,10 @@
 package com.tvmaze.middleware.service;
 
 import com.tvmaze.middleware.client.TvMazeClient;
+import com.tvmaze.middleware.dto.CommentResponse;
 import com.tvmaze.middleware.dto.SearchShowResponse;
 import com.tvmaze.middleware.dto.tvmaze.TvMazeShow;
 import com.tvmaze.middleware.dto.tvmaze.TvMazeShowDetail;
-import com.tvmaze.middleware.repository.TvMazeShowRepository;
-import com.tvmaze.middleware.mapper.TvMazeShowMapper;
 
 import org.springframework.stereotype.Service;
 
@@ -15,13 +14,13 @@ import java.util.List;
 public class TvMazeService {
 
     private final TvMazeClient tvMazeClient;
-    private final TvMazeShowRepository tvMazeShowRepository;
-    private final TvMazeShowMapper tvMazeShowMapper;
+    private final CommentService commentService;
+    private final ShowService showService;
 
-    public TvMazeService(TvMazeClient tvMazeClient, TvMazeShowRepository tvMazeShowRepository, TvMazeShowMapper tvMazeShowMapper) {
+    public TvMazeService(TvMazeClient tvMazeClient, CommentService commentService, ShowService showService) {
         this.tvMazeClient = tvMazeClient;
-        this.tvMazeShowRepository = tvMazeShowRepository;
-        this.tvMazeShowMapper = tvMazeShowMapper;
+        this.commentService = commentService;
+        this.showService = showService;
     }
 
     public List<SearchShowResponse> search(String query) {
@@ -50,12 +49,35 @@ public class TvMazeService {
     }
 
     public TvMazeShowDetail getShow(Long showId) {
-        return tvMazeShowRepository.findById(showId)
-            .map(tvMazeShowMapper::toShowDetail)
-            .orElseGet(() -> {
-                TvMazeShowDetail show = tvMazeClient.getShow(showId);
-                tvMazeShowRepository.save(tvMazeShowMapper.toDocument(show));
-                return show;
-            });
+        TvMazeShowDetail show = showService.getShow(showId);
+
+        List<CommentResponse> comments = commentService.getCommentsByShowId(showId);
+
+        return new TvMazeShowDetail(
+            show.id(),
+            show.url(),
+            show.name(),
+            show.type(),
+            show.language(),
+            show.genres(),
+            show.status(),
+            show.runtime(),
+            show.averageRuntime(),
+            show.premiered(),
+            show.ended(),
+            show.officialSite(),
+            show.schedule(),
+            show.rating(),
+            show.weight(),
+            show.network(),
+            show.webChannel(),
+            show.dvdCountry(),
+            show.externals(),
+            show.image(),
+            show.summary(),
+            show.updated(),
+            show.links(),
+            comments
+        );
     }
 }

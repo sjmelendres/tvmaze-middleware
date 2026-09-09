@@ -3,6 +3,7 @@ package com.tvmaze.middleware.mapper;
 import com.tvmaze.middleware.document.TvMazeShowDocument;
 import com.tvmaze.middleware.dto.tvmaze.TvMazeShowDetail;
 import org.springframework.stereotype.Component;
+import java.util.List;
 
 @Component
 public class TvMazeShowMapper {
@@ -31,7 +32,8 @@ public class TvMazeShowMapper {
             document.getImage(),
             document.getSummary(),
             document.getUpdated(),
-            document.getLinks()
+            document.getLinks(),
+            List.of()
         );
     }
 
