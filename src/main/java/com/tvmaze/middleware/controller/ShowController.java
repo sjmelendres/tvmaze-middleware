@@ -15,8 +15,8 @@ public class ShowController {
         this.tvMazeService = tvMazeService;
     }
 
-    @GetMapping("/show/{showId}")
-    public TvMazeShowDetail getShow(@PathVariable Long showId) {
-        return tvMazeService.getShow(showId);
+    @GetMapping("/show/{show_id}")
+    public TvMazeShowDetail getShow(@PathVariable Long show_id) {
+        return tvMazeService.getShow(show_id);
     }
 }
