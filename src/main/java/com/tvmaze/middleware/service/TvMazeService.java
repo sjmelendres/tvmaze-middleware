@@ -3,6 +3,8 @@ package com.tvmaze.middleware.service;
 import com.tvmaze.middleware.client.TvMazeClient;
 import com.tvmaze.middleware.dto.SearchShowResponse;
 import com.tvmaze.middleware.dto.tvmaze.TvMazeShow;
+import com.tvmaze.middleware.dto.tvmaze.TvMazeShowDetail;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -39,5 +41,9 @@ public class TvMazeService {
         }
 
         return null;
+    }
+
+    public TvMazeShowDetail getShow(Long showId) {
+        return tvMazeClient.getShow(showId);
     }
 }

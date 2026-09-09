@@ -5,6 +5,7 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.beans.factory.annotation.Value;
+import com.tvmaze.middleware.dto.tvmaze.TvMazeShowDetail;
 
 import java.util.List;
 
@@ -27,5 +28,12 @@ public class TvMazeClient {
                         .build())
                 .retrieve()
                 .body(new ParameterizedTypeReference<>() {});
+    }
+
+    public TvMazeShowDetail getShow(Long showId) {
+        return restClient.get()
+            .uri("/shows/{showId}", showId)
+            .retrieve()
+            .body(TvMazeShowDetail.class);
     }
 }
