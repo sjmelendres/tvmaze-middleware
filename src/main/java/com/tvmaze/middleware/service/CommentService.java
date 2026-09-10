@@ -5,6 +5,7 @@ import com.tvmaze.middleware.dto.CreateCommentRequest;
 import com.tvmaze.middleware.mapper.CommentMapper;
 import com.tvmaze.middleware.repository.CommentRepository;
 import org.springframework.stereotype.Service;
+import com.tvmaze.middleware.dto.SearchCommentResponse;
 
 import java.util.List;
 
@@ -32,6 +33,16 @@ public class CommentService {
         return commentRepository.findByShowId(showId)
             .stream()
             .map(commentMapper::toResponse)
+            .toList();
+    }
+
+    public List<SearchCommentResponse> getSearchCommentsByShowId(Long showId) {
+        return commentRepository.findByShowId(showId)
+            .stream()
+            .map(comment -> new SearchCommentResponse(
+                    comment.getComment(),
+                    comment.getRating()
+            ))
             .toList();
     }
 }

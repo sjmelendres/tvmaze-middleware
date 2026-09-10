@@ -27,12 +27,13 @@ public class TvMazeService {
         return tvMazeClient.search(query)
             .stream()
             .map(item -> new SearchShowResponse(
-                item.show().id(),
-                item.show().name(),
-                getChannel(item.show()),
-                item.show().summary(),
-                item.show().genres()
-            ))
+            item.show().id(),
+            item.show().name(),
+            getChannel(item.show()),
+            item.show().summary(),
+            item.show().genres(),
+            commentService.getSearchCommentsByShowId(item.show().id())
+        ))
             .toList();
     }
 
