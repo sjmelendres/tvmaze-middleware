@@ -23,7 +23,7 @@ public class SearchController {
     @GetMapping("/search")
     public List<SearchShowResponse> search(
         @RequestParam("search_query")
-        @NotBlank
+        @NotBlank(message = "El parámetro 'search_query' es obligatorio")
         String query
     ) {
         return tvMazeService.search(query);
